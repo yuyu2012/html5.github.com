@@ -1,0 +1,948 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>无标题文档</title>
+<link href="css/main.css" rel="stylesheet" type="text/css" media="all" />
+<link href="font-awesome-4.3.0/css/font-awesome.min.css"  rel="stylesheet" type="text/css" media="all" />
+<script src="js/jquery-1.10.2.min.js"></script>
+<script>
+
+$(document).ready(function(){
+	minHeight();
+	
+	<!--左侧收缩-->
+	 giveId(".sbga");
+	 giveId(".sbgldiv")
+	$(".sbga").click( function () {
+		var ids=$(this).attr("id");
+		var nos=ids.substring(4);
+		 $("#sbgldiv"+nos).slideToggle("fast");
+		 if($("#sbga"+nos+ " i").attr("class")=="fa fa-chevron-right"){
+			 $("#sbga"+nos+ " i").attr("class","fa fa-caret-down");
+			 }
+		else{
+			$("#sbga"+nos+ " i").attr("class","fa fa-chevron-right");
+			}
+		 
+	});
+	
+	<!--tab切换-->
+	giveId(".hometabajs");
+	giveId(".hometablejs");
+	$(".hometabajs").click( function () {
+		 $(".hometabajs").removeClass("lt_checked");
+		$(this).addClass("lt_checked");
+		
+		var ids=$(this).attr("id");
+		var nos=ids.substring(10);
+		 $(".hometablejs").hide();
+		 $("#hometablejs"+nos).show();
+	});
+	
+	
+	<!--赋值id-->
+	function giveId(x){
+		var className=x.substring(1);
+		$(x).each(function(i) {
+            this.id=className+i;
+        });	
+	}
+	
+	<!--隔行换色-->
+	$(".ghhs tbody tr:even").css("background","#f5f5f5");
+	
+	<!--弹出框-->
+	$(".exchange").click( function () { 
+		$("#exchange_tck1").show();
+		$(".mask").show();
+		$(".mask").css("z-index","800");
+		beMiddle(); 
+	});
+	$("#exchange_tck1_close,#tckclose1").click( function () {
+		 $(".mask").hide(); 
+		 $("#exchange_tck1").hide(); 
+		 $("#exchange_tck3").hide(); 
+	});
+	$(".truetckaddbtn").click( function () { 
+		$("#exchange_tck2").show();
+		$(".mask").show();
+		$(".mask").css("z-index","802");
+		beMiddle1("#exchange_tck2");
+	});
+	$(".clotckjs").click( function () {
+		 $("#exchange_tck2").hide(); 
+		 $(".mask").css("z-index","800");
+	});
+	
+	
+	$("#tck2okbtn").click( function () {
+		 $("#exchange_tck1").hide(); 
+		 $("#exchange_tck2").hide(); 
+		 $("#exchange_tck3").show(); 
+		 $(".mask").css("z-index","800");
+	});
+	
+	<!--点击更多-->
+	$(document).bind("click",function(e){ 
+		var target = $(e.target); 
+		if(target.closest(".morebtn").length == 1){ 
+			$(".more_ul").css({"position":"absolute","top": e.pageY+10+"px","left": e.pageX-10+"px"}) .slideToggle("fast");
+			return;
+		} 
+		if(target.closest(".more_ul").length == 0){ 
+			$(".more_ul").slideUp("fast");
+		} 
+	}) 
+	
+	<!--更多后的弹出框-->
+	$("#more_back_btn").click( function () {
+		 $(".more_ul").slideUp("fast");
+		 $("#tck_back").show(); 
+		 beMiddle();
+	});	
+	$("#more_pause_btn").click( function () {
+		 $(".more_ul").slideUp("fast");
+		 $(".mask").show();
+		 $("#tck_pause").show(); 
+		 beMiddle();
+	});	
+	$("#more_stop_btn").click( function () {
+		 $(".more_ul").slideUp("fast");
+		 $(".mask").show();
+		 $("#tck_stop").show(); 
+		 beMiddle();
+	});	
+	$("#more_chart_btn").click( function () {
+		 $(".more_ul").slideUp("fast");
+		 $(".mask").show();
+		 $("#tck_chart").show();
+		 beMiddle1("#tck_chart");
+	});	
+	$("#more_tree_btn").click( function () {
+		 $(".more_ul").slideUp("fast");
+		 $(".mask").show();
+		 $("#tck_tree").show();
+		 beMiddle();
+	});	
+	$(".more_tck_close").click( function () {
+		 $(".mask").hide();
+		 $(".tck").hide();
+	});	
+	
+	<!--轨迹图与波特图的切换-->
+	$("#gjt").click( function () {
+		 $("#gjt_pic").show();
+		 $("#btt_pic").hide();
+		 $("#gjt").addClass("tmc_li1a_checked");
+		 $("#btt").removeClass("tmc_li1a_checked");
+	});	
+	
+	$("#btt").click( function () {
+		 $("#gjt_pic").hide();
+		 $("#btt_pic").show();
+		 $("#gjt").removeClass("tmc_li1a_checked");
+		 $("#btt").addClass("tmc_li1a_checked");
+	});	
+	
+	
+});
+
+
+
+
+	
+
+
+$(window).resize(function(){
+	minHeight();
+	beMiddle();
+});
+
+<!--右边的最小高度，就是可见区域高度，减去头部高度-->
+function minHeight(){
+  var rightHeight=document.documentElement.clientHeight-$(".top").height();
+  $(".right").css("min-height",rightHeight+"px");
+}
+
+
+
+<!--弹出框始终居中-->
+function beMiddle(){
+ var windowheight=$(window).height();
+ var tkcheigh=$(".tck").height();
+
+ var _scrollHeight = $(document).scrollTop();
+ var tcktop=(windowheight-tkcheigh)/2+ _scrollHeight+"px";
+ 
+ var windowwidth=$(window).width();  
+ var tkcwidth=$(".tck").width();
+ var tckleft=(windowwidth-tkcwidth)/2+"px";
+ $(".tck").css({ left: tckleft, top: tcktop });
+}
+function beMiddle1(tckk){
+ var windowheight=$(window).height();
+ var tkcheigh=$(tckk).height();
+ var _scrollHeight = $(document).scrollTop();
+ var tcktop=(windowheight-tkcheigh)/2+ _scrollHeight+"px";
+ 
+ var windowwidth=$(window).width();  
+ var tkcwidth=$(tckk).width();
+ var tckleft=(windowwidth-tkcwidth)/2+"px";
+ $(tckk).css({ left: tckleft, top: tcktop });
+}
+
+</script>
+</head>
+
+<body>
+
+	<div class="tck" id="tck_tree" >
+    	<div class="tck_top">
+        	<span>流程记录</span>
+            <button class="more_tck_close" id="exchange_tck1_close"><i class="fa fa-times"></i></button>
+        </div>
+    	<div class="tck_main">
+        	<div class="tck_main_treeoperate">
+                <div class="tmt_left">
+                    <input type="text" value="搜索" /><button><i class="fa fa-search"></i></button>
+                </div>
+                <div class="tmt_right">
+                    <button><i class="fa fa-chevron-left"></i><span>上页</span></button>
+                    <button><i class="fa fa-chevron-right"></i><span>下页</span></button>
+                </div>
+            </div>
+            <table class="tck_main_tree_table ghhs" border="0" cellpadding="0" cellspacing="0">
+            	<thead>
+                	<tr>
+                    	<td>名称<i class="fa fa-sort"></i></td>
+                        <td>执行部门<i class="fa fa-sort"></i></td>
+                        <td>执行人<i class="fa fa-sort"></i></td>
+                        <td>环节<i class="fa fa-sort"></i></td>
+                        <td>结束时间<i class="fa fa-sort"></i></td>
+                        <td>内容<i class="fa fa-sort"></i></td>
+                    </tr>
+                </thead>
+                <tbody>
+                	<tr>
+                    	<td>订单申请</td>
+                        <td>董事会</td>
+                        <td>system</td>
+                        <td>订单申请</td>
+                        <td>2015-06-05</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                    	<td>订单申请</td>
+                        <td>董事会</td>
+                        <td>system</td>
+                        <td>订单申请</td>
+                        <td>2015-06-05</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                    	<td>订单申请</td>
+                        <td>董事会</td>
+                        <td>system</td>
+                        <td>订单申请</td>
+                        <td>2015-06-05</td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                    	<td>订单申请</td>
+                        <td>董事会</td>
+                        <td>system</td>
+                        <td>订单申请</td>
+                        <td>2015-06-05</td>
+                        <td></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+	<div class="tck" id="tck_chart">
+    	<div class="tck_top">
+        	<span>流程图</span>
+            <button class="more_tck_close" id="exchange_tck1_close"><i class="fa fa-times"></i></button>
+        </div>
+    	<div class="tck_main">
+        	<ul class="tck_main_chart">
+            	<li class="tmc_li1"><a id="gjt" class="tmc_li1a_checked" href="#">轨迹图</a><a id="btt" href="#">波特图</a></li>
+                <li class="tmc_li2" id="gjt_pic"><img src="images/005COuUmgw1esnqttb38gj30c80to40x.jpg" /></li>
+                <li class="tmc_li2" id="btt_pic" style="display:none" >
+                	<table border="0" cellpadding="0" cellspacing="0">
+                    <thead>
+                      <tr>
+                        <td>标题：</td>
+                        <td>订单申请：订单系统</td>
+                      </tr>
+                    </thead>
+                      <tr>
+                        <td>执行者：</td>
+                        <td>system</td>
+                      </tr>
+                      <tr>
+                        <td>状态：</td>
+                        <td>完成</td>
+                      </tr>
+                      <tr>
+                        <td>开始时间：</td>
+                        <td>2015-05-05 12:51:12</td>
+                      </tr>
+                      <tr>
+                        <td>结束时间：</td>
+                        <td>2015-05-05 12:52:12</td>
+                      </tr>
+                    </table>
+                    <img src="images/arrright.png" />
+                    <table border="0" cellpadding="0" cellspacing="0">
+                    <thead>
+                      <tr>
+                        <td>标题：</td>
+                        <td>订单申请：订单系统</td>
+                      </tr>
+                    </thead>
+                      <tr>
+                        <td>执行者：</td>
+                        <td>system</td>
+                      </tr>
+                      <tr>
+                        <td>状态：</td>
+                        <td>完成</td>
+                      </tr>
+                      <tr>
+                        <td>开始时间：</td>
+                        <td>2015-05-05 12:51:12</td>
+                      </tr>
+                      <tr>
+                        <td>结束时间：</td>
+                        <td>2015-05-05 12:52:12</td>
+                      </tr>
+                    </table>
+                    <img src="images/arrright.png" />
+                    <table border="0" cellpadding="0" cellspacing="0">
+                    <thead>
+                      <tr>
+                        <td>标题：</td>
+                        <td>订单申请：订单系统</td>
+                      </tr>
+                    </thead>
+                      <tr>
+                        <td>执行者：</td>
+                        <td>system</td>
+                      </tr>
+                      <tr>
+                        <td>状态：</td>
+                        <td>完成</td>
+                      </tr>
+                      <tr>
+                        <td>开始时间：</td>
+                        <td>2015-05-05 12:51:12</td>
+                      </tr>
+                      <tr>
+                        <td>结束时间：</td>
+                        <td>2015-05-05 12:52:12</td>
+                      </tr>
+                    </table>
+
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+	<div class="tck" id="tck_stop" >
+    	<div class="tck_top">
+        	<span>终止确认</span>
+            <button class="more_tck_close" id="exchange_tck1_close"><i class="fa fa-times"></i></button>
+        </div>
+    	<div class="tck_main">
+        	<div style="float:left; width:100%;text-align:center; margin-bottom:15px; "><b>流程即将终止</b></div>
+            <ul  class="xzlz">
+            	<li class="xzlz_tit"><span>附言</span></li>
+                <li><textarea name="" cols="" rows=""></textarea></li>
+            </ul>
+        </div>
+        <div class="tck_bottom">
+        	<input class="tck_okbtn" type="button" value="确定"  />
+            <input class="tck_cancelbtn more_tck_close" id="tckclose1" type="button" value="取消" />
+        </div>
+    </div>
+
+
+	<div class="tck" id="tck_pause" >
+    	<div class="tck_top">
+        	<span>暂停确认</span>
+            <button class="more_tck_close" id="exchange_tck1_close"><i class="fa fa-times"></i></button>
+        </div>
+    	<div class="tck_main">
+        	<div style="float:left; width:100%;text-align:center; margin-bottom:15px; "><b>流程即将暂停</b></div>
+            <ul  class="xzlz">
+            	<li class="xzlz_tit"><span>附言</span></li>
+                <li><textarea name="" cols="" rows=""></textarea></li>
+            </ul>
+        </div>
+        <div class="tck_bottom">
+        	<input class="tck_okbtn" type="button" value="确定"  />
+            <input class="tck_cancelbtn more_tck_close" id="tckclose1" type="button" value="取消" />
+        </div>
+    </div>
+
+
+
+
+	<div class="tck" id="tck_back" >
+    	<div class="tck_top">
+        	<span>提示</span>
+            <!--<button id="exchange_tck1_close"><i class="fa fa-times"></i></button>-->
+        </div>
+    	<div class="tck_main tck_main_back">
+        	<p>回退出错，没有找到回退的目标环节</p>
+            <p><b>编号：</b>dfsd74f85e</p>
+        	
+        </div>
+        <div class="tck_bottom">
+        	<!--<input class="tck_okbtn" type="button" value="确定" onclick=" location='040文件管理员主页.html'" />-->
+            <input class="tck_cancelbtn tck_cancelbtn_gb more_tck_close"  type="button" value="关闭" />
+        </div>
+    </div>
+
+
+<ul class="more_ul" id="more_ul">
+	<li><button id="more_back_btn"><i class="fa fa-arrow-left"></i><span>回退</span></button></li>
+    <li><button id="more_pause_btn"><i class="fa fa-pause"></i><span>暂停</span></button></li>
+    <li><button id="more_stop_btn"><i class="fa fa-stop"></i><span>终止</span></button></li>
+    <li><button id="more_chart_btn"><i class="fa fa-photo"></i><span>流程图</span></button></li>
+    <li><button id="more_tree_btn"><i class="fa fa-file-text"></i><span>流程记录</span></button></li>
+</ul>
+
+	<div class="tck" id="exchange_tck3">
+    	<div class="tck_top">
+        	<span>流转确认</span>
+            <button id="exchange_tck1_close"><i class="fa fa-times"></i></button>
+        </div>
+    	<div class="tck_main">
+        	<ul class="xzlz">
+            	<li class="xzlz_tit"><span>下一步</span></li>
+                <li>
+                	<p class="checkp">
+                    	<span><button><i class="fa fa-check-square"></i></button></span>
+                    	<b>分析测量不确定度的来源</b>
+                    </p>
+                    <ul class="cuserul">
+                    	<li><img  src="images/userbig.png" /></li>
+                        <li>莫先天</li>
+                    </ul>
+                	<button class="tckaddbtn truetckaddbtn" style="margin-left:0"><i class="fa fa-plus-square-o "></i></button>
+                    <button class="tckaddbtn" style="margin-left:0"><i class="fa fa-minus-square-o "></i></button>
+                </li>
+            </ul>
+            <ul  class="xzlz">
+            	<li class="xzlz_tit"><span>附言</span></li>
+                <li><textarea name="" cols="" rows=""></textarea></li>
+            </ul>
+        </div>
+        <div class="tck_bottom">
+        	<input class="tck_okbtn" type="button" value="确定" onclick=" location='l设备管理主页.html'" />
+            <input class="tck_cancelbtn" id="tckclose1" type="button" value="取消" />
+        </div>
+    </div>
+
+
+
+	<div class="tck" style="z-index:803" id="exchange_tck2">
+    	<div class="tck_top">
+        	<span>选择执行者</span>
+            <button class="clotckjs"><i class="fa fa-times"></i></button>
+        </div>
+    	<div class="tck_main">
+        	<div class="choseman_left">
+            	<input type="text" /><button class="tcksearch"><i class="fa fa-search"></i></button>
+            	<ul>
+                	<li><button><i class="fa fa-caret-down"></i></button><span>组织机构</span></li>
+                	<li class="marginleft15"><button><i class="fa fa-caret-down"></i></button><img src="images/pic.png" /><span>xx市人民检察院</span></li>
+                    <li class="marginleft30"><button><i class="fa fa-caret-down"></i></button><img src="images/pic1.png" /><span>xx市人民检察院技术处</span></li>
+                    <li class="marginleft45"><button><i class="fa fa-caret-down"></i></button><img src="images/pic1.png"  /><span>技术处办公室</span></li>
+                    <li class="marginleft60"><button><i class="fa fa-caret-right"></i></button><img src="images/user.png" /><span>处长</span></li>
+                    <li class="marginleft60"><button><i class="fa fa-caret-right"></i></button><img src="images/user.png" /><span>主任</span></li>
+                    <li class="marginleft30 chosemleft_checked"><button><i class="fa fa-caret-down"></i></button><img  src="images/pic1.png"/><span>鉴定业务部</span></li>
+                    <li class="marginleft45"><button><i class="fa fa-caret-right"></i></button><img  src="images/pic1.png"/><span>受理室</span></li>
+                    <li class="marginleft45"><button><i class="fa fa-caret-right"></i></button><img  src="images/pic1.png"/><span>档案室</span></li>
+                    <li class="marginleft45"><button><i class="fa fa-caret-right"></i></button><img  src="images/pic1.png"/><span>总办</span></li>
+                </ul>
+            </div>
+            <ul class="choseman_center">
+            	<li><button><i class="fa fa-chevron-right"></i>　全选</button></li>
+                <li><button><i class="fa fa-chevron-right"></i>　选择</button></li>
+                <li><button><i class="fa fa-chevron-left"></i>　移除</button></li>
+                <li><button><i class="fa fa-chevron-left"></i>　清空</button></li>
+            </ul>
+            <div class="choseman_right">
+            	<div class="cm_rt"><input name="" type="checkbox" value="" /><label>级联选择</label></div>
+                <div class="cm_rb">
+                	<div><b>名称</b></div>
+                	<ul>
+                    	<li class="cm_rchecked"><span>莫先天</span></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="tck_bottom">
+        	<input class="tck_okbtn" id="tck2okbtn" type="button" value="确定" />
+            <input class="tck_cancelbtn clotckjs" type="button" value="取消" />
+        </div>
+    </div>
+
+
+	<div class="tck" id="exchange_tck1">
+    	<div class="tck_top">
+        	<span>流转确认</span>
+            <button id="exchange_tck1_close"><i class="fa fa-times"></i></button>
+        </div>
+    	<div class="tck_main">
+        	<ul class="xzlz">
+            	<li class="xzlz_tit"><span>下一步</span></li>
+                <li>
+                	<p class="checkp">
+                    	<span><button><i class="fa fa-check-square"></i></button></span>
+                    	<b>分析测量不确定度的来源</b>
+                    </p>
+                	<button class="tckaddbtn truetckaddbtn" ><i class="fa fa-plus-square-o "></i></button>
+                </li>
+            </ul>
+            <ul  class="xzlz">
+            	<li class="xzlz_tit"><span>附言</span></li>
+                <li><textarea name="" cols="" rows=""></textarea></li>
+            </ul>
+        </div>
+        <div class="tck_bottom">
+        	<!--<input class="tck_okbtn" type="button" value="确定" />-->
+            <input class="tck_cancelbtn" id="tckclose1" type="button" value="取消" />
+        </div>
+    </div>
+    
+	<div class="mask"></div>
+	<div class="top">
+    	<span class="top_left">司法业务鉴定综合管理平台</span>
+        <div class="top_right"><i class="fa fa-user"></i><a href="#">admin</a></div>
+    </div>
+    <div class="left">
+    	<a href="#" class="lefta_checked"><span>主页</span></a>
+        <a href="#"><span>协同办公</span></a>
+        <a href="#" class="sbga"><span>鉴定业务</span><i class="fa fa-chevron-right"></i></a>
+        <div class="sbgldiv" style="display:none" >
+        <a href="#" ><span class="erj">电子数据</span></a>
+        <a href="#"><span class="erj">法医</span></a>
+        <a href="#" ><span class="erj">司法会计</span></a>
+        <a href="#"><span class="erj">文件检验</span></a>
+        <a href="#"><span class="erj">痕迹</span></a>
+        <a href="#" ><span class="erj">声像资料</span></a>
+        <a href="#"><span class="erj">心理测试</span></a>
+        </div>
+        <a href="#"><span>新增客户</span></a>
+        <a href="#"><span>客户列表</span></a>
+        <a href="#"><span>登记委托方满意度调查</span></a>
+        <a href="#"><span>登记投诉及处理记录单</span></a>
+        <a href="#"><span>委托方满意度调查列表</span></a>
+        <a href="#"><span>投诉登记及处理记录列表</span></a>
+        <a href="#"><span>外来人员登记表</span></a>
+       
+    </div>
+    <div class="right">
+    	<div class="rightpadding">
+            <ul class="right_top noedit">
+                <li class="rt1"><span>主页</span></li>
+            </ul>
+            
+            <div class="home_tab">
+            <div class="home_tab_tit"><span>最新案件</span></div>
+            	<div class="listpage_tab">
+                    <a href="#" class="lt_checked hometabajs">电子数据</a>
+                    <a href="#" class="hometabajs">法医</a>
+                    <a href="#" class="hometabajs">司法会计</a>
+                    <a href="#" class="hometabajs">文件检验</a>
+                    <a href="#" class="hometabajs">痕迹</a>
+                    <a href="#" class="hometabajs">声像资料</a>
+                    <a href="#" class="hometabajs">心理测试</a>
+            	</div>
+                <table border="0" cellspacing="0" cellpadding="0" style="display:table" class="hometablejs">
+                <thead>
+                  <tr>
+                  	<td>案件名称</td>
+                    <td>委托人</td>
+                    <td>委托单位</td>
+                    <td>委托时间</td>
+                  </tr>
+                </thead>
+                  <tbody>
+                   <tr>
+                   <td>电子数据：报告审批（xx交通案李四严重受伤）</td>
+                    <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                   <tr>
+                   <td>电子数据：签发文书及材料领取</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                   <tr>
+                   <td>电子数据：报告审批（xx交通案李四严重受伤）</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                  <tr>
+                   <td>电子数据：签发文书及材料领取</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                  <tr>
+                   <td>电子数据：签发文书及材料领取</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                  </tbody>
+                  </table>
+                  
+                  <table border="0" cellspacing="0" cellpadding="0" style="display:none" class="hometablejs">
+                <thead>
+                  <tr>
+                  	<td>案件名称</td>
+                    <td>委托人</td>
+                    <td>委托单位</td>
+                    <td>委托时间</td>
+                  </tr>
+                </thead>
+                  <tbody>
+                   <tr>
+                   <td>法医：报告审批（xx交通案李四严重受伤）</td>
+                    <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                   <tr>
+                   <td>法医：签发文书及材料领取</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                   <tr>
+                   <td>法医：报告审批（xx交通案李四严重受伤）</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                  <tr>
+                   <td>法医：签发文书及材料领取</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                  <tr>
+                   <td>法医：签发文书及材料领取</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                  </tbody>
+                  </table>
+                  
+                  <table border="0" cellspacing="0" cellpadding="0" style="display:none" class="hometablejs">
+                <thead>
+                  <tr>
+                  	<td>案件名称</td>
+                    <td>委托人</td>
+                    <td>委托单位</td>
+                    <td>委托时间</td>
+                  </tr>
+                </thead>
+                  <tbody>
+                   <tr>
+                   <td>司法会计：报告审批（xx交通案李四严重受伤）</td>
+                    <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                   <tr>
+                   <td>司法会计：签发文书及材料领取</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                   <tr>
+                   <td>司法会计：报告审批（xx交通案李四严重受伤）</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                  <tr>
+                   <td>司法会计：签发文书及材料领取</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                  <tr>
+                   <td>司法会计：签发文书及材料领取</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                  </tbody>
+                  </table>
+                  
+                  <table border="0" cellspacing="0" cellpadding="0" style="display:none" class="hometablejs">
+                <thead>
+                  <tr>
+                  	<td>案件名称</td>
+                    <td>委托人</td>
+                    <td>委托单位</td>
+                    <td>委托时间</td>
+                  </tr>
+                </thead>
+                  <tbody>
+                   <tr>
+                   <td>文件检验：报告审批（xx交通案李四严重受伤）</td>
+                    <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                   <tr>
+                   <td>文件检验：签发文书及材料领取</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                   <tr>
+                   <td>文件检验：报告审批（xx交通案李四严重受伤）</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                  <tr>
+                   <td>文件检验：签发文书及材料领取</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                  <tr>
+                   <td>文件检验：签发文书及材料领取</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                  </tbody>
+                  </table>
+                  
+                  <table border="0" cellspacing="0" cellpadding="0" style="display:none" class="hometablejs">
+                <thead>
+                  <tr>
+                  	<td>案件名称</td>
+                    <td>委托人</td>
+                    <td>委托单位</td>
+                    <td>委托时间</td>
+                  </tr>
+                </thead>
+                  <tbody>
+                   <tr>
+                   <td>痕迹：报告审批（xx交通案李四严重受伤）</td>
+                    <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                   <tr>
+                   <td>痕迹：签发文书及材料领取</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                   <tr>
+                   <td>痕迹：报告审批（xx交通案李四严重受伤）</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                  <tr>
+                   <td>痕迹：签发文书及材料领取</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                  <tr>
+                   <td>痕迹：签发文书及材料领取</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                  </tbody>
+                  </table>
+                  
+                  <table border="0" cellspacing="0" cellpadding="0" style="display:none" class="hometablejs">
+                <thead>
+                  <tr>
+                  	<td>案件名称</td>
+                    <td>委托人</td>
+                    <td>委托单位</td>
+                    <td>委托时间</td>
+                  </tr>
+                </thead>
+                  <tbody>
+                   <tr>
+                   <td>声像资料：报告审批（xx交通案李四严重受伤）</td>
+                    <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                   <tr>
+                   <td>声像资料：签发文书及材料领取</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                   <tr>
+                   <td>声像资料：报告审批（xx交通案李四严重受伤）</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                  <tr>
+                   <td>声像资料：签发文书及材料领取</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                  <tr>
+                   <td>声像资料：签发文书及材料领取</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                  </tbody>
+                  </table>
+                  
+                  <table border="0" cellspacing="0" cellpadding="0" style="display:none" class="hometablejs">
+                <thead>
+                  <tr>
+                  	<td>案件名称</td>
+                    <td>委托人</td>
+                    <td>委托单位</td>
+                    <td>委托时间</td>
+                  </tr>
+                </thead>
+                  <tbody>
+                   <tr>
+                   <td>心理测试：报告审批（xx交通案李四严重受伤）</td>
+                    <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                   <tr>
+                   <td>心理测试：签发文书及材料领取</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                   <tr>
+                   <td>心理测试：报告审批（xx交通案李四严重受伤）</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                  <tr>
+                   <td>心理测试：签发文书及材料领取</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                  <tr>
+                   <td>心理测试：签发文书及材料领取</td>
+                   <td>张三</td>
+                    <td>xx律师事务所</td>
+                    <td>2015-05-05 12:12:45</td>
+                  </tr>
+                  </tbody>
+                  </table>
+                  
+                  
+            </div>
+            
+            <div class="home_chart">
+            	<img src="images/chart1.png" />
+            </div>
+            
+            <div class="home_mission marginright">
+            	<div class="hm_tit">
+                	<b>待办任务</b>
+                    <div>
+                    	<button><i class="fa fa-undo"></i></button>
+                        <button><i class="fa fa-remove"></i></button>
+                    </div>
+                </div>
+                <ul>
+                	<li>
+                    	<b><a href="#">电子数据：审批报告（xx网络诈骗案）</a></b>
+                    	<span>张三</span><span>2015-06-05 12:15:45</span>
+                    </li>
+                    <li>
+                    	<b><a href="#">电子数据：审批报告（xx网络诈骗案）</a></b>
+                    	<span>张三</span><span>2015-06-05 12:15:45</span>
+                    </li>
+                    <li>
+                    	<b><a href="#">电子数据：审批报告（xx网络诈骗案）</a></b>
+                    	<span>张三</span><span>2015-06-05 12:15:45</span>
+                    </li>
+                    <li>
+                    	<b><a href="#">电子数据：审批报告（xx网络诈骗案）</a></b>
+                    	<span>张三</span><span>2015-06-05 12:15:45</span>
+                    </li>
+                    <li>
+                    	<b><a href="#">电子数据：审批报告（xx网络诈骗案）</a></b>
+                    	<span>张三</span><span>2015-06-05 12:15:45</span>
+                    </li>
+                   
+                </ul>
+            </div>
+            
+            <div class="home_mission">
+            	<div class="hm_tit">
+                	<b>提交任务</b>
+                    <div>
+                    	<button><i class="fa fa-undo"></i></button>
+                        <button><i class="fa fa-remove"></i></button>
+                    </div>
+                </div>
+                <ul>
+                	<li>
+                    	<b><a href="#">电子数据：审批报告（xx网络诈骗案）</a></b>
+                    	<span>张三</span><span>2015-06-05 12:15:45</span>
+                    </li>
+                    <li>
+                    	<b><a href="#">电子数据：审批报告（xx网络诈骗案）</a></b>
+                    	<span>张三</span><span>2015-06-05 12:15:45</span>
+                    </li>
+                    <li>
+                    	<b><a href="#">电子数据：审批报告（xx网络诈骗案）</a></b>
+                    	<span>张三</span><span>2015-06-05 12:15:45</span>
+                    </li>
+                    <li>
+                    	<b><a href="#">电子数据：审批报告（xx网络诈骗案）</a></b>
+                    	<span>张三</span><span>2015-06-05 12:15:45</span>
+                    </li>
+                    <li>
+                    	<b><a href="#">电子数据：审批报告（xx网络诈骗案）</a></b>
+                    	<span>张三</span><span>2015-06-05 12:15:45</span>
+                    </li>
+                  
+                </ul>
+            </div>
+            
+        </div>
+    </div>
+</body>
+</html>
